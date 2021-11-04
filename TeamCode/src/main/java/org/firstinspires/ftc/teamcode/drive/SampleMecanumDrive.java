@@ -98,10 +98,10 @@ public class SampleMecanumDrive extends MecanumDrive {
         // upward (normal to the floor) using a command like the following:
         // BNO055IMUUtil.remapAxes(imu, AxesOrder.XYZ, AxesSigns.NPN);
 
-        leftFront = hardwareMap.get(DcMotorEx.class, "leftFront");
-        leftRear = hardwareMap.get(DcMotorEx.class, "leftRear");
-        rightRear = hardwareMap.get(DcMotorEx.class, "rightRear");
-        rightFront = hardwareMap.get(DcMotorEx.class, "rightFront");
+        leftFront = hardwareMap.get(DcMotorEx.class, "FRONT LEFT");
+        leftRear = hardwareMap.get(DcMotorEx.class, "BACK LEFT");
+        rightRear = hardwareMap.get(DcMotorEx.class, "BACK RIGHT");
+        rightFront = hardwareMap.get(DcMotorEx.class, "FRONT RIGHT");
 
         motors = Arrays.asList(leftFront, leftRear, rightRear, rightFront);
 
@@ -280,25 +280,7 @@ public class SampleMecanumDrive extends MecanumDrive {
 
     @Override
     public Double getExternalHeadingVelocity() {
-        // TODO: This must be changed to match your configuration
-        //                           | Z axis
-        //                           |
-        //     (Motor Port Side)     |   / X axis
-        //                       ____|__/____
-        //          Y axis     / *   | /    /|   (IO Side)
-        //          _________ /______|/    //      I2C
-        //                   /___________ //     Digital
-        //                  |____________|/      Analog
-        //
-        //                 (Servo Port Side)
-        //
-        // The positive x axis points toward the USB port(s)
-        //
-        // Adjust the axis rotation rate as necessary
-        // Rotate about the z axis is the default assuming your REV Hub/Control Hub is laying
-        // flat on a surface
-
-        return (double) imu.getAngularVelocity().zRotationRate;
+        return 0.0;
     }
 
     public static TrajectoryVelocityConstraint getVelocityConstraint(double maxVel, double maxAngularVel, double trackWidth) {

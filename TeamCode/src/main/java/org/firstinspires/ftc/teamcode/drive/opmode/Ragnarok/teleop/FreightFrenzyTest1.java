@@ -1,34 +1,39 @@
-package org.firstinspires.ftc.teamcode.drive.opmode.Ragnarok;
+package org.firstinspires.ftc.teamcode.drive.opmode.Ragnarok.teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp
-
-public class BasicDrive extends LinearOpMode {
+public class FreightFrenzyTest1 extends LinearOpMode {
     private DcMotor front_left;
     private DcMotor front_right;
     private DcMotor back_left;
     private DcMotor back_right;
+    private DcMotor spinny_thing;
+    private Servo gate;
 
     @Override
     public void runOpMode() {
 
 
-        front_left = hardwareMap.get(DcMotor.class, "Front Left");
-        front_right = hardwareMap.get(DcMotor.class, "Front Right");
-        back_left = hardwareMap.get(DcMotor.class, "Back Left");
-        back_right = hardwareMap.get(DcMotor.class, "Back Right");
+        front_left = hardwareMap.get(DcMotor.class, "FRONT LEFT");
+        front_right = hardwareMap.get(DcMotor.class, "FRONT RIGHT");
+        back_left = hardwareMap.get(DcMotor.class, "BACK LEFT");
+        back_right = hardwareMap.get(DcMotor.class, "BACK RIGHT");
+        spinny_thing = hardwareMap.get(DcMotor.class, "SPINNY THING");
+        gate = hardwareMap.get(Servo.class, "GATE");
 
         front_left.setDirection(DcMotor.Direction.FORWARD);
         front_right.setDirection(DcMotor.Direction.REVERSE);
         back_left.setDirection(DcMotor.Direction.FORWARD);
         back_right.setDirection(DcMotor.Direction.REVERSE);
-
+        spinny_thing.setDirection(DcMotor.Direction.FORWARD);
+        gate.setDirection(Servo.Direction.FORWARD);
 
         double front_left_power;
         double front_right_power;
@@ -59,7 +64,19 @@ public class BasicDrive extends LinearOpMode {
             back_right_power = 0;
 
             switch(run_type) {
+                case "pov": {
+                    int strafeDirection =  1; // negative or positive
+                    int turnDirection   = -1; // negative or positive
+                    double moveSpeed   = -gamepad1.left_stick_y;
+                    double turnSpeed   =  gamepad1.right_stick_x * turnDirection;
+                    double strafeSpeed =  gamepad1.left_stick_x * strafeDirection;
 
+                    front_left_power = moveSpeed - turnSpeed + strafeSpeed;
+                    front_right_power = moveSpeed + turnSpeed - strafeSpeed;
+                    back_left_power = moveSpeed - turnSpeed - strafeSpeed;
+                    back_right_power = moveSpeed + turnSpeed + strafeSpeed;
+                    break;
+                }
                 case "tank": {
                     front_left_power = -gamepad1.left_stick_y;
                     front_right_power = -gamepad1.right_stick_y;
@@ -68,15 +85,7 @@ public class BasicDrive extends LinearOpMode {
                     break;
                 }
                 default: {
-                    int strafeDirection = 1; // negative or positive
-                    double moveSpeed = -gamepad1.left_stick_y;
-                    double turnSpeed = gamepad1.right_stick_x;
-                    double strafeSpeed = strafeDirection * gamepad1.left_stick_x;
-
-                    front_left_power = moveSpeed + turnSpeed + strafeSpeed;
-                    front_right_power = moveSpeed - turnSpeed - strafeSpeed;
-                    back_left_power = moveSpeed + turnSpeed - strafeSpeed;
-                    back_right_power = moveSpeed - turnSpeed + strafeSpeed;
+                    telemetry.addData("ERROR", "Run type not found");
                     break;
                 }
             }
@@ -84,7 +93,7 @@ public class BasicDrive extends LinearOpMode {
             if (gamepad1.left_bumper) {
                 speedChange1 = 0.2;
             } else if (gamepad1.right_bumper) {
-                speedChange1 = 1;
+                speedChange1 = 0.6;
             } else {
                 speedChange1 = 0.5;
             }
@@ -100,6 +109,21 @@ public class BasicDrive extends LinearOpMode {
             back_right.setPower(back_right_power);
             back_left.setPower(back_left_power);
 
+            /*
+            if (!gamepad1.y) {
+                spinny_thing.setPower(  0.5 * gamepad1.left_trigger);
+            } else {
+                spinny_thing.setPower( -0.5 * gamepad1.left_trigger);
+            }
+            */
+
+            if (gamepad1.a) {
+                gate.setPosition(-1); // down
+            } else if (gamepad1.b) {
+                gate.setPosition(1); // up
+            }
+
+            spinny_thing.setPower( gamepad1.y ? speedChange1 * gamepad1.left_trigger : -1 * speedChange1 * gamepad1.left_trigger );
 
             telemetry.addData("Status", "Running");
             telemetry.addData("Front Left", front_left_power);
