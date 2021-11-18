@@ -21,7 +21,7 @@ public class Auto_V1_Blue extends LinearOpMode {
 
         waitForStart();
 
-        Trajectory trajectory = drive.trajectoryBuilder(drive.getPoseEstimate())
+        Trajectory trajectory = drive.trajectoryBuilder(new Pose2d())
                 .splineTo(new Vector2d(-60, 0), Math.PI)
                 .splineTo(new Vector2d(0, -60), Math.PI/2)
                 .build();

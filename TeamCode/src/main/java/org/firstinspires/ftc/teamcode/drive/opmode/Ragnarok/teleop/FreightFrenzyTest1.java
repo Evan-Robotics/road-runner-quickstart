@@ -145,11 +145,11 @@ public class FreightFrenzyTest1 extends LinearOpMode {
 
             spinny_thing.setPower( spinny_direction ? speedChange1 * gamepad1.left_trigger : -1 * speedChange1 * gamepad1.left_trigger );
 
-            intake_main.setPower(gamepad1.right_trigger * speedChange1);
-            intake_2.setPower(gamepad1.right_trigger * speedChange1);
+            intake_main.setPower(gamepad1.right_trigger * speedChange1 * 1.2);
+            intake_2.setPower(gamepad1.right_trigger * speedChange1 * 0.9);
 
             if (gamepad1.a) {
-                bucket.setPosition(1);
+                bucket.setPosition(0.7);
             }
             else {
                 bucket.setPosition(0);

@@ -197,10 +197,10 @@ public class TeleOp_V1_Blue extends LinearOpMode {
     }
 
     private boolean inObstacle(Pose2d pos) {
-        if ((pos.getX() > 18 || pos.getX() < 30) && (pos.getY() > -54 || pos.getY() < 54)) {
+        if ((pos.getX() > 18 && pos.getX() < 30) && (pos.getY() > -54 && pos.getY() < 54)) {
             return true;
         }
-        if ((pos.getX() > 24 || pos.getX() < 54) && (pos.getY() > -30 || pos.getY() < -18)) {
+        if ((pos.getX() > 24 && pos.getX() < 54) && (pos.getY() > -30 && pos.getY() < -18)) {
             return true;
         }
 
