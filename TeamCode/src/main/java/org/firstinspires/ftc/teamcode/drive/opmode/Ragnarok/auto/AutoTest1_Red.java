@@ -75,7 +75,7 @@ public class AutoTest1_Red extends LinearOpMode {
     private DcMotor back_right;
 
     private DcMotor spinny_thing;
-    private Servo gate;
+    private Servo bucket;
 
     /* Declare OpMode members. */
     private ElapsedTime     runtime = new ElapsedTime();
@@ -102,7 +102,7 @@ public class AutoTest1_Red extends LinearOpMode {
         back_right = hardwareMap.get(DcMotor.class, "BACK RIGHT");
 
         spinny_thing = hardwareMap.get(DcMotor.class, "SPINNY THING");
-        gate = hardwareMap.get(Servo.class, "GATE");
+        bucket = hardwareMap.get(Servo.class, "BUCKET");
 
         front_left.setDirection(DcMotor.Direction.FORWARD);
         front_right.setDirection(DcMotor.Direction.REVERSE);
@@ -110,7 +110,7 @@ public class AutoTest1_Red extends LinearOpMode {
         back_right.setDirection(DcMotor.Direction.REVERSE);
 
         spinny_thing.setDirection(DcMotor.Direction.REVERSE);
-        gate.setDirection(Servo.Direction.FORWARD);
+        bucket.setDirection(Servo.Direction.FORWARD);
 
         front_left.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         front_right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -139,20 +139,28 @@ public class AutoTest1_Red extends LinearOpMode {
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
 
         spinny_thing.setPower(0);
-        gate.setPosition(1);
 
         sleep(500);
 
-        timeMove(0.4, 0.4, 0.4, 0.4);
-        sleep(1500);
+        timeMove(-0.3, -0.3, -0.3, -0.3);
+        sleep(1000);
         timeMove(0, 0, 0, 0);
-        sleep(500);
+        sleep(100);
+        timeMove(-0.8, 0.8, 0.8, -0.8);
+        sleep(1000);
+        timeMove(0, 0, 0, 0);
+        sleep(100);
         for (int i=0; i < 5; i++) {
             spinny_thing.setPower(0.5);
             sleep(2 * 1000);
             spinny_thing.setPower(0);
             sleep(2 * 1000);
         }
+        timeMove(-0.2, -0.2, -0.2, -0.2);
+        sleep(800);
+        timeMove(0, 0, 0, 0);
+        sleep(100);
+
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
