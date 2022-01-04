@@ -12,8 +12,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.util.DashboardUtil;
 
-@TeleOp
-public class FreightFrenzyTest1 extends LinearOpMode {
+@TeleOp(name="Red Side TeleOp")
+public class FreightFrenzyTest1_Red extends LinearOpMode {
     private DcMotor front_left;
     private DcMotor front_right;
     private DcMotor back_left;
@@ -60,10 +60,6 @@ public class FreightFrenzyTest1 extends LinearOpMode {
         double back_right_power;
 
         String run_type = "pov";
-
-        boolean spinny_direction = false;
-        boolean spinny_direction_toggler = false;
-
 
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
@@ -125,6 +121,15 @@ public class FreightFrenzyTest1 extends LinearOpMode {
                 speedChange1 = 0.7;
             }
 
+            double speedChange2;
+            if (gamepad1.left_bumper) {
+                speedChange2 = 0.5;
+            } else if (gamepad1.right_bumper) {
+                speedChange2 = 1;
+            } else {
+                speedChange2 = 0.7;
+            }
+
             front_left_power *= speedChange1;
             front_right_power *= speedChange1;
             back_left_power *= speedChange1;
@@ -137,18 +142,12 @@ public class FreightFrenzyTest1 extends LinearOpMode {
             back_left.setPower(back_left_power);
 
 
+            spinny_thing.setPower( speedChange2 * gamepad2.left_trigger );
 
-            if (spinny_direction_toggler && !gamepad1.y) {
-                spinny_direction = !spinny_direction;
-            }
-            spinny_direction_toggler = gamepad1.y;
+            intake_main.setPower(gamepad2.right_trigger * speedChange2 * 1.2);
+            intake_2.setPower(gamepad2.right_trigger * speedChange2 * 0.9);
 
-            spinny_thing.setPower( spinny_direction ? speedChange1 * gamepad1.left_trigger : -1 * speedChange1 * gamepad1.left_trigger );
-
-            intake_main.setPower(gamepad1.right_trigger * speedChange1 * 1.2);
-            intake_2.setPower(gamepad1.right_trigger * speedChange1 * 0.9);
-
-            if (gamepad1.a) {
+            if (gamepad2.a) {
                 bucket.setPosition(0.7);
             }
             else {

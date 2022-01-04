@@ -46,12 +46,13 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * This hardware class assumes the following device names have been configured on the robot:
  * Note:  All names are lower case and some have single spaces between words.
  */
-public class HardwareRagnarok
-{
+public class HardwareRagnarok {
     /* Public OpMode members. */
     public DcMotor spinny_thing   = null;
     public DcMotor intake_main   = null;
     public DcMotor intake2   = null;
+
+    public Servo bucket = null;
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
@@ -90,6 +91,8 @@ public class HardwareRagnarok
 
 
         // Define and initialize ALL installed servos.
+        bucket = hwMap.get(Servo.class, "BUCKET");
+        bucket.setDirection(Servo.Direction.REVERSE);
 
     }
 }

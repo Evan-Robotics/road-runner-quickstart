@@ -25,8 +25,6 @@ import org.firstinspires.ftc.teamcode.drive.opmode.Ragnarok.HardwareRagnarok;
 @TeleOp(name = "--Alpha-- TeleOp V1", group = "Ragnarok")
 public class TeleOp_V1_Blue extends LinearOpMode {
 
-    public static double DRAWING_TARGET_RADIUS = 1;
-
     // Driving variables
     enum Mode {
         NORMAL_CONTROL,
@@ -38,6 +36,7 @@ public class TeleOp_V1_Blue extends LinearOpMode {
     boolean spinny_direction_toggler = false;
 
     double speedChange1;
+    double speedChange2;
 
     private Mode currentMode = Mode.NORMAL_CONTROL;
     private PIDFController headingController = new PIDFController(SampleMecanumDrive.HEADING_PID);
@@ -101,25 +100,34 @@ public class TeleOp_V1_Blue extends LinearOpMode {
                 speedChange1 = 0.7;
             }
 
+            if (gamepad2.left_bumper) {
+                speedChange2 = 0.5;
+            } else if (gamepad1.right_bumper) {
+                speedChange2 = 1;
+            } else {
+                speedChange2 = 0.7;
+            }
+
             // y toggles direction of spinny thing
-            if (spinny_direction_toggler && !gamepad1.y) {
+            if (spinny_direction_toggler && !gamepad2.y) {
                 spinny_direction = !spinny_direction;
             }
-            spinny_direction_toggler = gamepad1.y;
+            spinny_direction_toggler = gamepad2.y;
 
-            robot.spinny_thing.setPower(spinny_direction ? speedChange1 * gamepad1.left_trigger : -1 * speedChange1 * gamepad1.left_trigger);
+            robot.spinny_thing.setPower(spinny_direction ? speedChange2 * gamepad2.left_trigger : -1 * speedChange2 * gamepad2.left_trigger);
 
             // right trigger controls intake
-            robot.intake_main.setPower(gamepad1.right_trigger * speedChange1);
-            robot.intake2.setPower(gamepad1.right_trigger * speedChange1 * 0.7);
+            robot.intake_main.setPower(gamepad2.right_trigger * speedChange2);
+            robot.intake2.setPower(gamepad2.right_trigger * speedChange2 * 0.7);
 
+            robot.bucket.setPosition( gamepad2.a ? 0.7 : 0 );
 
             if (gamepad1.start) {
                 drive.getLocalizer().setPoseEstimate(new Pose2d(-63, 60, Math.PI/2));
             }
 
             //Distance to Tower
-            double getDistance = Math.sqrt(Math.pow(storage_pos.getX() - poseEstimate.getX(), 2) + Math.pow(storage_pos.getY() - poseEstimate.getY(), 2));
+
 
             switch (currentMode) {
                 case NORMAL_CONTROL:
