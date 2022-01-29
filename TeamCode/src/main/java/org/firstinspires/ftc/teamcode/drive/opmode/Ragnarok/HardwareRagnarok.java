@@ -51,8 +51,10 @@ public class HardwareRagnarok {
     public DcMotor spinny_thing   = null;
     public DcMotor intake_main   = null;
     public DcMotor intake2   = null;
+    public DcMotor lift = null;
 
     public Servo bucket = null;
+    public Servo cap = null;
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
@@ -74,12 +76,16 @@ public class HardwareRagnarok {
         intake_main = hwMap.get(DcMotor.class, "INTAKE MAIN");
         intake_main.setDirection(DcMotor.Direction.REVERSE);
         intake2 = hwMap.get(DcMotor.class, "INTAKE 2");
-        intake2.setDirection(DcMotor.Direction.FORWARD);
+        intake2.setDirection(DcMotor.Direction.REVERSE);
+        lift = hwMap.get(DcMotor.class, "LIFT");
+        lift.setDirection(DcMotor.Direction.FORWARD);
+        lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // Set all motors to zero power
         spinny_thing.setPower(0);
         intake_main.setPower(0);
         intake2.setPower(0);
+        lift.setPower(0);
 
         // Set all motors to run without encoders.
 
@@ -88,11 +94,15 @@ public class HardwareRagnarok {
         spinny_thing.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         intake_main.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         intake2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 
         // Define and initialize ALL installed servos.
         bucket = hwMap.get(Servo.class, "BUCKET");
         bucket.setDirection(Servo.Direction.REVERSE);
+
+        cap = hwMap.get(Servo.class, "CAP");
+        cap.setDirection(Servo.Direction.FORWARD);
 
     }
 }

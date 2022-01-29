@@ -22,8 +22,10 @@ import org.firstinspires.ftc.teamcode.drive.opmode.Ragnarok.PoseStorage;
 import org.firstinspires.ftc.teamcode.util.DashboardUtil;
 import org.firstinspires.ftc.teamcode.drive.opmode.Ragnarok.HardwareRagnarok;
 
-@TeleOp(name = "--Alpha-- TeleOp V1", group = "Ragnarok")
-public class TeleOp_V1_Blue extends LinearOpMode {
+import java.util.Collections;
+
+@TeleOp(name = "--MAIN-- TeleOp V1", group = "Ragnarok")
+public class TeleOp_V1 extends LinearOpMode {
 
     // Driving variables
     enum Mode {
@@ -45,7 +47,7 @@ public class TeleOp_V1_Blue extends LinearOpMode {
     private Vector2d storage_pos = new Vector2d(-66, 37);
 
     //Timers
-    private final ElapsedTime emergencytimer = new ElapsedTime();
+    private final ElapsedTime motorTimer = new ElapsedTime();
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -61,7 +63,7 @@ public class TeleOp_V1_Blue extends LinearOpMode {
             module.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
         }
 
-        //Start Pose from PoseStorage      Left tape: (new Pose2d(-63,50));
+
         drive.getLocalizer().setPoseEstimate(PoseStorage.currentPose);
         headingController.setInputBounds(-Math.PI, Math.PI);
 
@@ -118,13 +120,21 @@ public class TeleOp_V1_Blue extends LinearOpMode {
 
             // right trigger controls intake
             robot.intake_main.setPower(gamepad2.right_trigger * speedChange2);
-            robot.intake2.setPower(gamepad2.right_trigger * speedChange2 * 0.7);
+            robot.intake2.setPower(gamepad2.right_trigger * speedChange2);
 
             robot.bucket.setPosition( gamepad2.a ? 0.7 : 0 );
 
-            if (gamepad1.start) {
+            if (gamepad1.start && gamepad1.dpad_up) {
                 drive.getLocalizer().setPoseEstimate(new Pose2d(-63, 60, Math.PI/2));
             }
+
+            if (-gamepad2.left_stick_y > 0) {
+                robot.lift.setPower(-gamepad2.left_stick_y * speedChange2 * 1.5);
+            }
+            else {
+                robot.lift.setPower(-gamepad2.left_stick_y * speedChange2 * 0.1);
+            }
+            robot.cap.setPosition( gamepad2.x ? 0.36 : 0 );
 
             //Distance to Tower
 
@@ -138,9 +148,9 @@ public class TeleOp_V1_Blue extends LinearOpMode {
 
                     //Normal Robot Control
                     driveDirection = new Pose2d(
-                            Math.signum(ly) * ly * ly * speedChange1,
-                            Math.signum(lx) * lx * lx * speedChange1,
-                            Math.signum(rx) * rx * rx * speedChange1
+                            Math.abs(ly) * ly * speedChange1,
+                            Math.abs(lx) * lx * speedChange1,
+                            Math.abs(rx) * rx * speedChange1
                     );
 
                     // Switch to tank if gamepad1 left dpad is activated
@@ -200,6 +210,7 @@ public class TeleOp_V1_Blue extends LinearOpMode {
             telemetry.addData("x", poseEstimate.getX());
             telemetry.addData("y", poseEstimate.getY());
             telemetry.addData("heading", poseEstimate.getHeading());
+            telemetry.addData("Max Power", Collections.max(drive.getWheelVelocities()));
             telemetry.update();
         }
     }
@@ -208,7 +219,10 @@ public class TeleOp_V1_Blue extends LinearOpMode {
         if ((pos.getX() > 18 && pos.getX() < 30) && (pos.getY() > -54 && pos.getY() < 54)) {
             return true;
         }
-        if ((pos.getX() > 24 && pos.getX() < 54) && (pos.getY() > -30 && pos.getY() < -18)) {
+        else if ((pos.getX() > 24 && pos.getX() < 54) && (pos.getY() > -30 && pos.getY() < -18)) {
+            return true;
+        }
+        else if (false) {
             return true;
         }
 

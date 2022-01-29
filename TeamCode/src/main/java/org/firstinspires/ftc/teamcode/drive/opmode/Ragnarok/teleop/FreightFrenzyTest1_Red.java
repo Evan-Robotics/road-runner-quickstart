@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.util.DashboardUtil;
 
+@Disabled
 @TeleOp(name="Red Side TeleOp")
 public class FreightFrenzyTest1_Red extends LinearOpMode {
     private DcMotor front_left;
