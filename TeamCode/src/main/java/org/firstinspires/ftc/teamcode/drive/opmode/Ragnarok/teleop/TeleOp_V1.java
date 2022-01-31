@@ -37,6 +37,8 @@ public class TeleOp_V1 extends LinearOpMode {
     boolean spinny_direction = false;
     boolean spinny_direction_toggler = false;
 
+    double capPos = 0;
+
     double speedChange1;
     double speedChange2;
 
@@ -129,12 +131,16 @@ public class TeleOp_V1 extends LinearOpMode {
             }
 
             if (-gamepad2.left_stick_y > 0) {
-                robot.lift.setPower(-gamepad2.left_stick_y * speedChange2 * 1.5);
+                robot.lift.setPower(-gamepad2.left_stick_y * speedChange2 * 1.1);
             }
             else {
                 robot.lift.setPower(-gamepad2.left_stick_y * speedChange2 * 0.1);
             }
-            robot.cap.setPosition( gamepad2.x ? 0.36 : 0 );
+
+            capPos += gamepad2.right_stick_y * 0.01 * (speedChange2 * speedChange2);
+            capPos = Math.max(Math.min(0.4, capPos), 0);
+
+            robot.cap.setPosition( capPos );
 
             //Distance to Tower
 
@@ -211,6 +217,7 @@ public class TeleOp_V1 extends LinearOpMode {
             telemetry.addData("y", poseEstimate.getY());
             telemetry.addData("heading", poseEstimate.getHeading());
             telemetry.addData("Max Power", Collections.max(drive.getWheelVelocities()));
+            telemetry.addData("Lift Power", robot.lift.getPower());
             telemetry.update();
         }
     }
