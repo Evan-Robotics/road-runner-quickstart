@@ -41,6 +41,7 @@ public class TeleOp_V1 extends LinearOpMode {
 
     double speedChange1;
     double speedChange2;
+    double intake_speed;
 
     private Mode currentMode = Mode.NORMAL_CONTROL;
     private PIDFController headingController = new PIDFController(SampleMecanumDrive.HEADING_PID);
@@ -121,20 +122,23 @@ public class TeleOp_V1 extends LinearOpMode {
             robot.spinny_thing.setPower(spinny_direction ? speedChange2 * gamepad2.left_trigger : -1 * speedChange2 * gamepad2.left_trigger);
 
             // right trigger controls intake
-            robot.intake_main.setPower(gamepad2.right_trigger * speedChange2);
-            robot.intake2.setPower(gamepad2.right_trigger * speedChange2);
+            intake_speed = gamepad2.right_trigger * 0.5 * speedChange2 * ( gamepad2.left_bumper ? -1 : 1 );
 
-            robot.bucket.setPosition( gamepad2.a ? 0.7 : 0 );
+            robot.intake_main.setPower(intake_speed);
+            robot.intake2.setPower(intake_speed);
+            robot.intake3.setPower(intake_speed);
+
+            robot.bucket.setPosition( gamepad2.a ? 0.4 : 0 );
 
             if (gamepad1.start && gamepad1.dpad_up) {
                 drive.getLocalizer().setPoseEstimate(new Pose2d(-63, 60, Math.PI/2));
             }
 
             if (-gamepad2.left_stick_y > 0) {
-                robot.lift.setPower(-gamepad2.left_stick_y * speedChange2 * 1.1);
+                robot.lift.setPower(-gamepad2.left_stick_y * speedChange2 * 0.75);
             }
             else {
-                robot.lift.setPower(-gamepad2.left_stick_y * speedChange2 * 0.1);
+                robot.lift.setPower(-gamepad2.left_stick_y * speedChange2 * 0.25);
             }
 
             capPos += gamepad2.right_stick_y * 0.01 * (speedChange2 * speedChange2);
@@ -210,7 +214,6 @@ public class TeleOp_V1 extends LinearOpMode {
 
             //Driver Station Telemetry
 
-            //telemetry.addData("Alpha", robot.color_sensor.alpha());
             telemetry.addData("mode", currentMode);
             telemetry.addData("Spinner Direction", spinny_direction ? "Red" : "Blue");
             telemetry.addData("x", poseEstimate.getX());
