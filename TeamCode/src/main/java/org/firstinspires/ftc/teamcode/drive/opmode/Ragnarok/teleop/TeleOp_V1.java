@@ -122,13 +122,15 @@ public class TeleOp_V1 extends LinearOpMode {
             robot.spinny_thing.setPower(spinny_direction ? speedChange2 * gamepad2.left_trigger : -1 * speedChange2 * gamepad2.left_trigger);
 
             // right trigger controls intake
-            intake_speed = gamepad2.right_trigger * 0.5 * speedChange2 * ( gamepad2.left_bumper ? -1 : 1 );
+            intake_speed = gamepad2.right_trigger * speedChange2 * ( gamepad2.left_bumper ? -1 : 1 );
 
-            robot.intake_main.setPower(intake_speed);
+            robot.intake_main.setPower(intake_speed * 0.75);
             robot.intake2.setPower(intake_speed);
             robot.intake3.setPower(intake_speed);
 
             robot.bucket.setPosition( gamepad2.a ? 0.4 : 0 );
+
+            robot.hook.setPosition( gamepad2.x ? 0.6 : 0 );
 
             if (gamepad1.start && gamepad1.dpad_up) {
                 drive.getLocalizer().setPoseEstimate(new Pose2d(-63, 60, Math.PI/2));

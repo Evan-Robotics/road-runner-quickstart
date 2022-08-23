@@ -56,6 +56,7 @@ public class HardwareRagnarok {
     public Servo bucket = null;
     public Servo cap = null;
     public CRServo intake3 = null;
+    public Servo hook = null;
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
@@ -108,5 +109,7 @@ public class HardwareRagnarok {
         intake3 = hwMap.get(CRServo.class, "INTAKE 3");
         intake3.setDirection(CRServo.Direction.FORWARD);
 
+        hook = hwMap.get(Servo.class, "HOOK");
+        hook.setDirection(Servo.Direction.FORWARD);
     }
 }
