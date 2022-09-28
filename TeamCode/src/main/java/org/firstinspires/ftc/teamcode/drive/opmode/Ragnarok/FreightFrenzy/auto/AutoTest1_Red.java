@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.drive.opmode.Ragnarok.auto;
+package org.firstinspires.ftc.teamcode.drive.opmode.Ragnarok.FreightFrenzy.auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -65,7 +65,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 
 @Autonomous
-
+@Disabled
 public class AutoTest1_Red extends LinearOpMode {
 
 

@@ -1,31 +1,26 @@
-package org.firstinspires.ftc.teamcode.drive.opmode.Ragnarok.teleop;
+package org.firstinspires.ftc.teamcode.drive.opmode.Ragnarok.PowerPlay.teleop;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.canvas.Canvas;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
-import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.control.PIDFController;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.hardware.lynx.LynxModule;
-import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.drive.opmode.Ragnarok.HardwareRagnarok;
 import org.firstinspires.ftc.teamcode.drive.opmode.Ragnarok.PoseStorage;
 import org.firstinspires.ftc.teamcode.util.DashboardUtil;
-import org.firstinspires.ftc.teamcode.drive.opmode.Ragnarok.HardwareRagnarok;
 
 import java.util.Collections;
 
-@TeleOp(name = "--MAIN-- TeleOp V1", group = "Ragnarok")
-public class TeleOp_V1 extends LinearOpMode {
+@TeleOp(name = "Old TeleOp", group = "Ragnarok")
+public class Old_TeleOp extends LinearOpMode {
 
     // Driving variables
     enum Mode {

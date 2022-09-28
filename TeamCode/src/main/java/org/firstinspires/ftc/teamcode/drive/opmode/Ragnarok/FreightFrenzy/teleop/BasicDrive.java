@@ -1,14 +1,12 @@
-package org.firstinspires.ftc.teamcode.drive.opmode.Ragnarok.teleop;
+package org.firstinspires.ftc.teamcode.drive.opmode.Ragnarok.FreightFrenzy.teleop;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Disabled
-@TeleOp
+@TeleOp(name="Freight Frenzy Simple Drive")
 public class BasicDrive extends LinearOpMode {
     private DcMotor front_left;
     private DcMotor front_right;
@@ -19,15 +17,20 @@ public class BasicDrive extends LinearOpMode {
     public void runOpMode() {
 
 
-        front_left = hardwareMap.get(DcMotor.class, "Front Left");
-        front_right = hardwareMap.get(DcMotor.class, "Front Right");
-        back_left = hardwareMap.get(DcMotor.class, "Back Left");
-        back_right = hardwareMap.get(DcMotor.class, "Back Right");
+        front_left = hardwareMap.get(DcMotor.class, "FRONT LEFT");
+        front_right = hardwareMap.get(DcMotor.class, "FRONT RIGHT");
+        back_left = hardwareMap.get(DcMotor.class, "BACK LEFT");
+        back_right = hardwareMap.get(DcMotor.class, "BACK RIGHT");
 
         front_left.setDirection(DcMotor.Direction.FORWARD);
         front_right.setDirection(DcMotor.Direction.REVERSE);
         back_left.setDirection(DcMotor.Direction.FORWARD);
         back_right.setDirection(DcMotor.Direction.REVERSE);
+
+        front_left.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        front_right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        back_left.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        back_right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 
         double front_left_power;
@@ -62,8 +65,9 @@ public class BasicDrive extends LinearOpMode {
 
                 case "pov": {
                     int strafeDirection = 1; // negative or positive
+                    int turnDirection = -1; // neg or pos
                     double moveSpeed = -gamepad1.left_stick_y;
-                    double turnSpeed = gamepad1.right_stick_x;
+                    double turnSpeed = turnDirection * gamepad1.right_stick_x;
                     double strafeSpeed = strafeDirection * gamepad1.left_stick_x;
 
                     front_left_power = moveSpeed + turnSpeed + strafeSpeed;
@@ -90,7 +94,7 @@ public class BasicDrive extends LinearOpMode {
             } else if (gamepad1.right_bumper) {
                 speedChange1 = 1;
             } else {
-                speedChange1 = 0.5;
+                speedChange1 = 0.6;
             }
 
             front_left_power *= speedChange1;

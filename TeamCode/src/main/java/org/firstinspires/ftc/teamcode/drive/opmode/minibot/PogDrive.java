@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-@TeleOp
+@TeleOp(name="Minibot Simple POV Drive")
 public class PogDrive extends LinearOpMode {
     private DcMotor left;
     private DcMotor right;

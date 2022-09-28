@@ -1,17 +1,20 @@
-package org.firstinspires.ftc.teamcode.drive.opmode.Ragnarok.teleop;
+package org.firstinspires.ftc.teamcode.drive.opmode.Ragnarok.FreightFrenzy.teleop;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.util.DashboardUtil;
 
 @Disabled
-@TeleOp(name="Blue Side TeleOp")
-public class FreightFrenzyTest1_Blue extends LinearOpMode {
+@TeleOp(name="Red Side TeleOp")
+public class FreightFrenzyTest1_Red extends LinearOpMode {
     private DcMotor front_left;
     private DcMotor front_right;
     private DcMotor back_left;
@@ -140,14 +143,15 @@ public class FreightFrenzyTest1_Blue extends LinearOpMode {
             back_left.setPower(back_left_power);
 
 
-            spinny_thing.setPower( speedChange2 * -gamepad2.left_trigger );
+            spinny_thing.setPower( speedChange2 * gamepad2.left_trigger );
 
             intake_main.setPower(gamepad2.right_trigger * speedChange2 * 1.2);
             intake_2.setPower(gamepad2.right_trigger * speedChange2 * 0.9);
 
             if (gamepad2.a) {
                 bucket.setPosition(0.7);
-            } else {
+            }
+            else {
                 bucket.setPosition(0);
             }
 

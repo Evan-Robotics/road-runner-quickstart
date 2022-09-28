@@ -1,12 +1,13 @@
-package org.firstinspires.ftc.teamcode.drive.opmode.Ragnarok.auto;
+package org.firstinspires.ftc.teamcode.drive.opmode.Ragnarok.FreightFrenzy.auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
-
-@Autonomous(name="Delay & Straight Auto", group="drive")
+@Disabled
+@Autonomous(name="Freight Frenzy Delay & Straight Auto", group="drive")
 public class AutoStraight extends LinearOpMode {
 
     @Override
